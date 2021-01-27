@@ -118,10 +118,11 @@ namespace Racebaan
         {
             int arrayPosition = 0;
             int orientation = 1;
-
+            
+           
             for (LinkedListNode<Section> node = track.Sections.First; node != null; node = node.Next)
             {
-        
+                ResetGraphics();
                 SectionData sectionData = _race.GetSectionData(node.Value);
                 switch (node.Value.SectionType)
                 {
@@ -299,7 +300,7 @@ namespace Racebaan
         }
         public static void ReDrawTrack(Object source, EventArgs e)
         {
-
+          
             SectionConverter(((DriversChangedEventArgs)e).Track);
             _trackCursorPositions = VisualisationController.CalcTrackCursorPositions(_trackSectionOrientations, _trackSections.Length, 1);
             _trackCursorPositions = VisualisationController.Fix2dArrayTrackCursorPositionsColumn(_trackCursorPositions, _trackSections);
@@ -309,7 +310,7 @@ namespace Racebaan
 
         public static void ReinitialiseEntireRace(Object source, EventArgs e)
         {
-
+        
             Console.Clear();
             Initialize(((DriversChangedEventArgs)e).Track);
         }
