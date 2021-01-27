@@ -1,0 +1,9 @@
+C:\Users\rosav\Desktop\Github_Racebaan\Racebaan\Model\bin\Debug\netcoreapp3.1\Model.deps.json
+C:\Users\rosav\Desktop\Github_Racebaan\Racebaan\Model\bin\Debug\netcoreapp3.1\Model.dll
+C:\Users\rosav\Desktop\Github_Racebaan\Racebaan\Model\bin\Debug\netcoreapp3.1\Model.pdb
+C:\Users\rosav\Desktop\Github_Racebaan\Racebaan\Model\obj\Debug\netcoreapp3.1\Model.csprojAssemblyReference.cache
+C:\Users\rosav\Desktop\Github_Racebaan\Racebaan\Model\obj\Debug\netcoreapp3.1\Model.AssemblyInfoInputs.cache
+C:\Users\rosav\Desktop\Github_Racebaan\Racebaan\Model\obj\Debug\netcoreapp3.1\Model.AssemblyInfo.cs
+C:\Users\rosav\Desktop\Github_Racebaan\Racebaan\Model\obj\Debug\netcoreapp3.1\Model.csproj.CoreCompileInputs.cache
+C:\Users\rosav\Desktop\Github_Racebaan\Racebaan\Model\obj\Debug\netcoreapp3.1\Model.dll
+C:\Users\rosav\Desktop\Github_Racebaan\Racebaan\Model\obj\Debug\netcoreapp3.1\Model.pdb
