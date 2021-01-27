@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 using System.Timers;
 using static Model.Section;
+
 
 namespace Controller
 {
@@ -102,11 +102,11 @@ namespace Controller
                         _driverWithSection.Add(Participants[count + 1], node);
                         _driverLapCount.Add(Participants[count], 0);
                         _driverLapCount.Add(Participants[count + 1], 0);
-                        count += 2;
+                       count += 2;
                     }
                     else
                     {
-                        _positions[trackSection] = new SectionData(Participants[count], 0, null, 0);
+                        _positions[trackSection] = new SectionData(Participants[count], 0, Participants[count + 1], 0);
                         _driverWithSection.Add(Participants[count], node);
                         _driverLapCount.Add(Participants[count], 0);
                         count++;
@@ -115,6 +115,7 @@ namespace Controller
             }
         }
         public void OnTimedEvent(Object source, ElapsedEventArgs e)
+        
         {
 
 
@@ -122,7 +123,7 @@ namespace Controller
             if (Participants.Count > 0)
             {
                 if (MoveDrivers())
-                {
+                {   
                     DriversChanged?.Invoke(this, new DriversChangedEventArgs() { Track = Track });
                     Debug.WriteLine("Race.OnTimedEvent: Moved Drivers");
                 }

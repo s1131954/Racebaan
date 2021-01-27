@@ -26,6 +26,15 @@ namespace Model
                 return Tracks.Dequeue();
             }
         }
+        public void AddParticipant(IParticipant participant)
+        {
+            Participants.Add(participant);
+        }
+
+        public void AddTrack(Track track)
+        {
+            Tracks.Enqueue(track);
+        }
 
     }
 }

@@ -7,7 +7,57 @@ namespace Controller
 {
     public static class VisualisationController
     {
-       
+        #region graphics
+        public static string[] _start =
+            {  "-----",
+                "  1] ",
+                "     ",
+                "  2] ",
+                "-----"};
+    public static string[] _finish =
+            {   "-----",
+                "  1# ",
+                "   # ",
+                "  2# ",
+                "-----" };
+        public static string[] _horizontal =
+             {   "-----",
+                "  1  ",
+                "     ",
+                "  2  ",
+                "-----"};
+        public static string[] _vertical =
+            {   "|   |",
+            "|   |",
+            "|2 1|",
+            "|   |",
+            "|   |"
+        };
+        public static string[] _turnS1 =
+           {   "/   |",
+                " 2  |",
+                "    |",
+                "  1 |",
+                "----/"};
+        public static string[] _turnW2 =
+             {   "|   \\",
+                "|   2",
+                "|    ",
+                "| 1  ",
+                "\\---"};
+        public static string[] _turnN3 =
+            {   "/----",
+                "|    ",
+                "| 1  ",
+                "|  2 ",
+                "|   /",};
+        public static string[] _turnE4 =
+           {   "----\\" ,
+                "  1 |",
+                "    |",
+                " 2  |",
+                "\\   |" };
+        #endregion
         public static int[,] CalcTrackCursorPositions(int[] TrackSectionOrientations , int trackLenght, int startOrientation)
         {
             int[,] TrackCursorPositions = new int[trackLenght, 2];

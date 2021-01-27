@@ -16,6 +16,7 @@ namespace Racebaan
         private static int[,] _trackCursorPositions;
         public static void Initialize(Track track)
         {
+
             _race = Data.CurrentRace;
             Console.WriteLine(Data.CurrentRace.Track.Name);
 
@@ -25,10 +26,12 @@ namespace Racebaan
 
             //Convert Sections to string[]  in _trackSections array
             SectionConverter(track);
+
             _trackCursorPositions = VisualisationController.CalcTrackCursorPositions(_trackSectionOrientations, _trackSections.Length, 1);
             //Fix negative values in row and columns
             _trackCursorPositions = VisualisationController.Fix2dArrayTrackCursorPositionsColumn(_trackCursorPositions, _trackSections);
             _trackCursorPositions = VisualisationController.Fix2dArrayTrackCursorPositionsRow(_trackCursorPositions, _trackSections);
+
             DrawTrack();
         }
 
@@ -94,6 +97,7 @@ namespace Racebaan
         {
             for (int i = 0; i < _trackSections.Length; i++)
             {
+                
                 DrawSection(_trackCursorPositions[i, 0], _trackCursorPositions[i, 1], (string[])_trackSections[i]);
             }
         }
@@ -102,13 +106,14 @@ namespace Racebaan
         {
             for (int i = 0; i < section.Length; i++)
             {
+
                 Console.CursorLeft = left;
                 Console.CursorTop = top + i;
                 Console.WriteLine(section[i]);
             }
           
         }
-        #region
+        #region secties
         private static void SectionConverter(Track track)
         {
             int arrayPosition = 0;
@@ -230,7 +235,7 @@ namespace Racebaan
         #endregion
         public static string[] ReplaceSection(string[] section, IParticipant p1, IParticipant p2) { 
             string[] result = new string[5];
-            bool driversOnSection = p1 != null || p2 != null;
+            bool driversOnSection = (p1 != null || p2 != null);
 
             for (int i = 0; i < 5; i++)
             {
@@ -251,7 +256,7 @@ namespace Racebaan
                 {
                     result = toReplace.Replace("1", p1.Name.Substring(0, 1)).Replace("2", " ");
                 }
-                else if (p1 != null && p2 == null)
+                else if (p1 == null && p2 != null)
                 {
                     result = toReplace.Replace("1", " ").Replace("2", p2.Name.Substring(0, 1));
                 }
@@ -291,6 +296,33 @@ namespace Racebaan
                 result[2] = b;
             }
             return result;
+        }
+        public static void ReDrawTrack(Object source, EventArgs e)
+        {
+
+            SectionConverter(((DriversChangedEventArgs)e).Track);
+            _trackCursorPositions = VisualisationController.CalcTrackCursorPositions(_trackSectionOrientations, _trackSections.Length, 1);
+            _trackCursorPositions = VisualisationController.Fix2dArrayTrackCursorPositionsColumn(_trackCursorPositions, _trackSections);
+            _trackCursorPositions = VisualisationController.Fix2dArrayTrackCursorPositionsRow(_trackCursorPositions, _trackSections);
+            DrawTrack();
+        }
+
+        public static void ReinitialiseEntireRace(Object source, EventArgs e)
+        {
+
+            Console.Clear();
+            Initialize(((DriversChangedEventArgs)e).Track);
+        }
+        public static void ResetGraphics()
+        {
+            _start = (string[])VisualisationController._start.Clone();
+            _finishHorizontal = (string[])VisualisationController._finish.Clone();
+            _horizontal = (string[])VisualisationController._horizontal.Clone();
+            _vertical = (string[])VisualisationController._vertical.Clone();
+            _turnDown = (string[])VisualisationController._turnS1.Clone();
+            _turnUp = (string[])VisualisationController._turnW2.Clone();
+            _turnRight = (string[])VisualisationController._turnN3.Clone();
+            _turnLeft = (string[])VisualisationController._turnE4.Clone();
         }
     }
 }
