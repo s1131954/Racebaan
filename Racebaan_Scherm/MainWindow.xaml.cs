@@ -35,11 +35,11 @@ namespace Racebaan_Scherm
 
         public void DriversChanged(object o, DriversChangedEventArgs e)
         {
-             this.Screen.Dispatcher.BeginInvoke(
+            this.Screen.Dispatcher.BeginInvoke(
                 DispatcherPriority.Render,
                 new Action(() =>
                 {
-                    //this.Screen.Source = null;
+                    this.Screen.Source = null;
                     this.Screen.Source = Visualize.drawTrack(Data.CurrentRace.Track);
                 })
             );
@@ -62,6 +62,7 @@ namespace Racebaan_Scherm
         }
 
        
+
 
 
 

@@ -6,9 +6,16 @@
         xmlns:local="clr-namespace:Racebaan_Scherm"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid Background="Black">
+    <Grid>
         <Image x:Name="Screen" Margin="0,20,0,0"/>
-       
+        <DockPanel LastChildFill="False">
+            <Menu DockPanel.Dock="Top" Height="20" VerticalAlignment="Top">
+                <MenuItem Header="Menu" Click="MenuItem_Click">
+                    
+                    <MenuItem Header="close" Click="MenuItem_Exit_Click"/>
+                </MenuItem>
+            </Menu>
+        </DockPanel>
         <Label Content="{Binding TrackName, BindsDirectlyToSource=False, IsAsync=False, NotifyOnTargetUpdated=False, NotifyOnValidationError=False, NotifyOnSourceUpdated=False, ValidatesOnNotifyDataErrors=True, ValidatesOnExceptions=False, ValidatesOnDataErrors=False}" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
 

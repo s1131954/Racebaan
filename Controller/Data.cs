@@ -69,6 +69,7 @@ namespace Controller
                 CurrentRace.Start();
             }
         }
+        
         public static void RaceEnded(Object source, EventArgs e)
         {
 

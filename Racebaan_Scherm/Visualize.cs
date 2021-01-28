@@ -88,7 +88,7 @@ namespace Racebaan_Scherm
                 "  1 |",
                 "----/"};
 
-        #endregion 
+        #endregion
         public enum Dir
         {
             North,
@@ -96,16 +96,8 @@ namespace Racebaan_Scherm
             West,
             East
         }
-       
-            public static void Initialize()
-            {
-                Data.newRace += onNewRace;
-            }
-
-            private static int minHeight, maxHeight, minWidth, maxWidth, currentX, currentY, startX, startY, trackWidth, trackHeight;
-            private static Dir direction = Dir.East;
-
-
+        private static int minHeight, maxHeight, minWidth, maxWidth, currentX, currentY, startX, startY, trackWidth, trackHeight;
+        public static Dir direction = Dir.East;
         public static BitmapSource drawTrack(Model.Track track)
         {
             startX = minWidth * -1;
@@ -115,26 +107,63 @@ namespace Racebaan_Scherm
             Calculate(track);
             return make_images.CreateBitmapSourceFromGdiBitmap(convertTrack(track));
         }
-        public static void clearConsole()
-            {
-                Console.Clear();
-            }
 
-            private static void drawToConsole(List<List<string[]>> raceTrack)
+        public static void Move()
+        {
+            switch (direction)
             {
-                foreach (List<string[]> y in raceTrack)
-                {
-                    for (int i = 0; i < 4; i++)
-                    {
-                        foreach (string[] x in y)
-                        {
-
-                            Console.Write(x[i]);
-                        }
-                        Console.WriteLine();
-                    }
-                }
+                case Dir.North:
+                    currentY--;
+                    break;
+                case Dir.East:
+                    currentX++;
+                    break;
+                case Dir.South:
+                    currentY++;
+                    break;
+                case Dir.West:
+                    currentX--;
+                    break;
             }
+        }
+
+        public static void RotateR()
+        {
+            switch (direction)
+            {
+                case Dir.North:
+                    direction = Dir.East;
+                    break;
+                case Dir.East:
+                    direction = Dir.South;
+                    break;
+                case Dir.South:
+                    direction = Dir.West;
+                    break;
+                case Dir.West:
+                    direction = Dir.North;
+                    break;
+            }
+        }
+
+        public static void RotateL()
+        {
+            switch (direction)
+            {
+                case Dir.North:
+                    direction = Dir.West;
+                    break;
+                case Dir.East:
+                    direction = Dir.North;
+                    break;
+                case Dir.South:
+                    direction = Dir.East;
+                    break;
+                case Dir.West:
+                    direction = Dir.South;
+                    break;
+            }
+        }
 
         private static string getCornerDir(Model.Section.SectionTypes type, Dir direction)
         {
@@ -170,113 +199,55 @@ namespace Racebaan_Scherm
             return null;
         }
 
-        //private static void displayBestParticipant()
-        //{
-        //    Console.WriteLine();
-        //    Console.WriteLine($"Most points: {Data.Competition.points.findWinner()}");
-        //    Console.WriteLine($"Best laptime: {Data.competition.lapTime.findWinner()}");
-        //    Console.WriteLine();
-        //}
+        public static void Calculate(Model.Track track)
+        {
 
-        public static void Move()
+            minHeight = 0;
+            maxHeight = 0;
+            minWidth = 0;
+            maxWidth = 0;
+            currentX = 0;
+            currentY = 0;
+
+            foreach (var section in track.Sections)
             {
-                switch (direction)
+                if (currentY < minHeight)
                 {
-                    case Dir.North:
-                        currentY--;
+                    minHeight = currentY;
+                }
+
+                if (currentY > maxHeight)
+                {
+                    maxHeight = currentY;
+                }
+
+                if (currentX < minWidth)
+                {
+                    minWidth = currentX;
+                }
+
+                if (currentX > maxWidth)
+                {
+                    maxWidth = currentX;
+                }
+                switch (section.SectionType)
+                {
+                    case Model.Section.SectionTypes.StartGrid:
+                    case Model.Section.SectionTypes.FinishGrid:
+                    case Model.Section.SectionTypes.Straight:
+                        Move();
                         break;
-                    case Dir.East:
-                        currentX++;
+                    case Model.Section.SectionTypes.RightCorner:
+                        RotateR();
+                        Move();
                         break;
-                    case Dir.South:
-                        currentY++;
-                        break;
-                    case Dir.West:
-                        currentX--;
+                    case Model.Section.SectionTypes.LeftCorner:
+                        RotateL();
+                        Move();
                         break;
                 }
             }
-
-            public static void RotateR()
-            {
-                switch (direction)
-                {
-                    case Dir.North:
-                        direction = Dir.East;
-                        break;
-                    case Dir.East:
-                        direction = Dir.South;
-                        break;
-                    case Dir.South:
-                        direction = Dir.West;
-                        break;
-                    case Dir.West:
-                        direction = Dir.North;
-                        break;
-                }
-            }
-
-            public static void RotateL()
-            {
-                switch (direction)
-                {
-                    case Dir.North:
-                        direction = Dir.West;
-                        break;
-                    case Dir.East:
-                        direction = Dir.North;
-                        break;
-                    case Dir.South:
-                        direction = Dir.East;
-                        break;
-                    case Dir.West:
-                        direction = Dir.South;
-                        break;
-                }
-            }
-
-            public static void Calculate(Track track)
-            {
-                foreach (var section in track.Sections)
-                {
-                    if (currentY < minHeight)
-                    {
-                        minHeight = currentY;
-                    }
-
-                    if (currentY > maxHeight)
-                    {
-                        maxHeight = currentY;
-                    }
-
-                    if (currentX < minWidth)
-                    {
-                        minWidth = currentX;
-                    }
-
-                    if (currentX > maxWidth)
-                    {
-                        maxWidth = currentX;
-                    }
-                    switch (section.SectionType)
-                    {
-                        case SectionTypes.StartGrid:
-                        case SectionTypes.FinishGrid:
-                        case SectionTypes.Straight:
-                            Move();
-                            break;
-                        case SectionTypes.RightCorner:
-                            RotateR();
-                            Move();
-
-                            break;
-                        case SectionTypes.LeftCorner:
-                            RotateL();
-                            Move();
-                            break;
-                    }
-                }
-            }
+        }
 
         public static Bitmap convertTrack(Model.Track track)
         {
@@ -349,7 +320,6 @@ namespace Racebaan_Scherm
 
             return b;
         }
-       
 
         public static void DrawPlayer(Graphics g, IParticipant driver1, IParticipant driver2, Dir d)
         {
@@ -393,7 +363,7 @@ namespace Racebaan_Scherm
                             break;
                         case Dir.West:
                             g.DrawImage(new Bitmap(make_images.returnBitmap(GetBitmap(driver2, d)), 20, 20), new Point(currentX * 70, currentY * 70 + 35));
-                           
+                            
                             break;
                     }
                 }
@@ -438,86 +408,45 @@ namespace Racebaan_Scherm
                         break;
                 }
             }
-           
-           
+            else if (p.TeamColor == TeamColors.Green)
+            {
+                switch (d)
+                {
+                    case Dir.North:
+                        return Driver_vertical_red;
+                        break;
+                    case Dir.South:
+                        return Driver_vertical_red;
+                        break;
+                    case Dir.East:
+                        return Driver_horizontal_red;
+                        break;
+                    case Dir.West:
+                        return Driver_horizontal_red;
+                        break;
+                }
+            }
+            else
+            {
+                switch (d)
+                {
+                    case Dir.North:
+                        return Driver_vertical_blauw;
+                        break;
+                    case Dir.South:
+                        return Driver_vertical_blauw;
+                        break;
+                    case Dir.East:
+                        return Driver_horizontal_blauw;
+                        break;
+                    case Dir.West:
+                        return Driver_horizontal_blauw;
+                        break;
+                }
+            }
             return "";
         }
-        public static List<List<string[]>> blankList()
-            {
-                List<List<string[]>> trackList = new List<List<string[]>>();
-                for (int i = 0; i <= trackHeight; i++)
-                {
-                    List<string[]> innerList = new List<string[]>();
-                    for (int j = 0; j <= trackWidth; j++)
-                    {
-                        innerList.Add(_blank);
-                    }
-                    trackList.Add(innerList);
-                }
-
-                return trackList;
-            }
-
-            public static string replaceNumbers(string input, IParticipant character1, IParticipant character2)
-            {
-                if (character1 != null)
-                {
-                    if (character1.Equipment.IsBroken)
-                    {
-                        input = input.Replace('1', '!');
-                    }
-                    else
-                    {
-                        input = input.Replace('1', character1.Name[0]);
-                    }
-                }
-                else
-                {
-                    input = input.Replace('1', ' ');
-                }
-
-                if (character2 != null)
-                {
-                    if (character2.Equipment.IsBroken)
-                    {
-                        input = input.Replace('2', '!');
-                    }
-                    else
-                    {
-                        input = input.Replace('2', character2.Name[0]);
-                    }
-                }
-                else
-                {
-                    input = input.Replace('2', ' ');
-                }
-                return input;
-            }
-
-            public static string[] replaceSection(string[] input, IParticipant character1, IParticipant character2)
-            {
-                string[] result = new string[4];
-                input.CopyTo(result, 0);
-                for (int i = 0; i < result.Length; i++)
-                {
-                    result[i] = replaceNumbers(result[i], character1, character2);
-                }
-
-                return result;
-            }
 
 
-            public static void onDriversChanged(object o, DriversChangedEventArgs e)
-            {
-                drawTrack(e.Track);
-            }
-
-            public static void onNewRace(object o, EventArgs e)
-            {
-                //displayBestParticipant();
-                Data.CurrentRace.DriversChanged += onDriversChanged;
-
-            }
-        
     }
 }
