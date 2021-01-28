@@ -308,12 +308,7 @@ namespace Racebaan
             DrawTrack();
         }
 
-        public static void ReinitialiseEntireRace(Object source, EventArgs e)
-        {
-        
-            Console.Clear();
-            Initialize(((DriversChangedEventArgs)e).Track);
-        }
+                                                                                                                        
         public static void ResetGraphics()
         {
             _start = (string[])VisualisationController._start.Clone();

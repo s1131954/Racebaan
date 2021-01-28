@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using static Model.Section;
 
-using static Model.Section;
 
 namespace Model
 {

@@ -17,8 +17,7 @@ namespace Racebaan
 
             
            Data.CurrentRace.DriversChanged += Visualisation.ReDrawTrack;
-           // Data.CurrentRace.NextRace += Data.RaceEnded;
-           Data.UpdateNextRace += Visualisation.ReinitialiseEntireRace;
+          // Data.UpdateNextRace += Visualisation.ReinitialiseEntireRace;
             
 
             for (; ;)
